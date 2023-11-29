@@ -17,9 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ActividadEvaluativaDosTheme {
-                // A surface container using the 'background' color from the theme
                 Surface{
-
+                    println("Hola mundo")
                 }
             }
         }
