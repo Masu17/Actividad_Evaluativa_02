@@ -18,7 +18,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             ActividadEvaluativaDosTheme {
                 Surface{
-                    println("Hola mundo")
                 }
             }
         }
