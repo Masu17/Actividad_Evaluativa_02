@@ -6,17 +6,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aguerecoders.actividadevaluativados.menus.BattleMenu
 import com.aguerecoders.actividadevaluativados.menus.CharacterSelection
+import com.aguerecoders.actividadevaluativados.menus.Login
 import com.aguerecoders.actividadevaluativados.menus.UserMenu
 
 @Composable
 fun GrafoNavegacion() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Rutas.UserMenu.ruta) {
+    NavHost(navController = navController, startDestination = Rutas.Login.ruta) {
 
-//        composable(Rutas.Login.ruta) {
-//            Login(navController = navController)
-//        }
+        composable(Rutas.Login.ruta) {
+            Login(navController = navController)
+        }
         composable(Rutas.UserMenu.ruta) {
             UserMenu(navController = navController)
         }

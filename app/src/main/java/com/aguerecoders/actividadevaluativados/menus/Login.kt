@@ -1,14 +1,11 @@
 package com.aguerecoders.actividadevaluativados.menus
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -39,11 +36,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.aguerecoders.actividadevaluativados.R
+import com.aguerecoders.actividadevaluativados.components.GenericButtonComponent
+import com.aguerecoders.actividadevaluativados.components.GenericTextFieldComponent
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun Login() {
+fun Login(navController: NavHostController) {
 
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -56,7 +56,7 @@ fun Login() {
         Spacer(Modifier.height(50.dp))
         Text(text = "Login", fontSize = 64.sp)
         Spacer(Modifier.height(20.dp))
-        TextFields(
+        GenericTextFieldComponent(
             placeholder = "Inserte un usuario",
             textContent = username,
             labelContent = "Usuario",
@@ -64,7 +64,7 @@ fun Login() {
             textAction = { username = it }
         )
         Spacer(Modifier.height(5.dp))
-        TextFields(
+        GenericTextFieldComponent(
             placeholder = "Inserte una contraseña",
             textContent = password,
             labelContent = "Contraseña",
@@ -72,90 +72,18 @@ fun Login() {
             textAction = { password = it }
         )
         Spacer(Modifier.height(20.dp))
-        genericButton(texto = "Iniciar sesion") {
+        GenericButtonComponent(texto = "Iniciar sesion") {
             if (username == "admin" && password == "admin") {
-
+                navController.navigate("UserMenu")
             } else {
+                Toast.makeText(
+                    navController.context,
+                    "Usuario o contraseña incorrectos",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TextFields(
-    placeholder: String,
-    textContent: String,
-    labelContent: String,
-    leadingIcon: ImageVector,
-    textAction: (String) -> Unit
-) {
 
-    var passwordIcon by remember {
-        if (labelContent == "Contraseña") {
-            mutableStateOf(R.drawable.baseline_visibility_24)
-        } else {
-            mutableStateOf(0)
-        }
-    }
-
-    var passwordTransformation by remember {
-        if (labelContent == "Contraseña") {
-            mutableStateOf<VisualTransformation>(PasswordVisualTransformation())
-        } else {
-            mutableStateOf(VisualTransformation.None)
-        }
-    }
-
-    TextField(
-        label = { Text(text = labelContent) },
-        value = textContent,
-        onValueChange = textAction,
-        placeholder = { Text(text = placeholder) },
-        leadingIcon = { Icon(leadingIcon, contentDescription = null) },
-        visualTransformation = passwordTransformation,
-        trailingIcon = {
-            if (labelContent == "Contraseña") {
-                IconButton(
-                    onClick = {
-                        if (passwordIcon == R.drawable.baseline_visibility_24) {
-                            passwordIcon = R.drawable.baseline_visibility_off_24
-                            passwordTransformation = VisualTransformation.None
-                        } else {
-                            passwordIcon = R.drawable.baseline_visibility_24
-                            passwordTransformation = PasswordVisualTransformation()
-                        }
-                    },
-                    content = {
-                        Icon(
-                            painter = painterResource(id = passwordIcon),
-                            contentDescription = null
-                        )
-                    }
-                )
-            }
-        },
-        modifier = Modifier
-            .width(300.dp)
-            .clip(RoundedCornerShape(10.dp)),
-        textStyle = TextStyle(fontSize = 20.sp),
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
-            errorIndicatorColor = Color.Transparent,
-            textColor = Color.Black,
-            placeholderColor = Color.Black,
-        )
-
-    )
-}
-
-@Composable
-fun genericButton(texto: String, onClickActionLambda: () -> Unit) {
-
-    Button(onClick = onClickActionLambda, colors = ButtonDefaults.buttonColors(Color.Blue)) {
-        Text(text = texto, fontSize = 20.sp, color = Color.White)
-    }
-
-}
