@@ -14,18 +14,18 @@ import androidx.navigation.NavHostController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BattleMenu(navController: NavHostController) {
-    SearchBar(query = "Busqueda", onQueryChange = "", onSearch = "", active = "", onActiveChange = "") {
+    SearchBarFuncionamiento(query = "Busqueda", onQueryChange = "", onSearch = "", active = "", onActiveChange = "") {
         
     }
 }
 
-fun SearchBar(query: String, onQueryChange: String, onSearch: String, active: String, onActiveChange: String, function: () -> Unit) {
+fun SearchBarFuncionamiento(query: String, onQueryChange: String, onSearch: String, active: String, onActiveChange: String, function: () -> Unit) {
 
 }
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchBar(
+fun SearchBarFuncionamiento(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
