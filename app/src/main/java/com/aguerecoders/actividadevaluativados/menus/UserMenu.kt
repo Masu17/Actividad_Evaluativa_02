@@ -36,28 +36,54 @@ import androidx.navigation.NavHostController
 import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import com.aguerecoders.actividadevaluativados.models.Bandas
 
 @Composable
 fun UserMenu(navController: NavHostController) {
     val persistence = Persistence()
+    var selectedBanda by remember { mutableStateOf<Bandas?>(null) }
+
     Column {
-        BarraDeBusqueda()
+        BarraDeBusqueda(onBandaSelected = { selectedBanda = it })
         LazyColumn {
-            persistence.bandas.forEach { banda ->
-                item {
-                    Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
-                        Image(painter = painterResource(id = banda.imagenBanda),
-                            contentDescription = banda.nombreBanda,
-                            modifier = Modifier.size(70.dp)
-                        )
-                        Text(text = banda.nombreBanda,
-                            modifier = Modifier.padding(16.dp),
-                            fontSize = 25.sp)
+            if (selectedBanda != null) {
+                persistence.bandas.filter { it == selectedBanda }.forEach { banda ->
+                    item {
+                        Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
+                            Image(painter = painterResource(id = banda.imagenBanda),
+                                contentDescription = banda.nombreBanda,
+                                modifier = Modifier.size(70.dp)
+                            )
+                            Text(text = banda.nombreBanda,
+                                modifier = Modifier.padding(16.dp),
+                                fontSize = 25.sp)
+                        }
+                    }
+                    banda.piratas.forEach { pirata ->
+                        item {
+                            PirataCard(pirata)
+                        }
                     }
                 }
-                banda.piratas.forEach { pirata ->
+            } else {
+                persistence.bandas.forEach { banda ->
                     item {
-                        PirataCard(pirata)
+                        Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
+                            Image(painter = painterResource(id = banda.imagenBanda),
+                                contentDescription = banda.nombreBanda,
+                                modifier = Modifier.size(70.dp)
+                            )
+                            Text(text = banda.nombreBanda,
+                                modifier = Modifier.padding(16.dp),
+                                fontSize = 25.sp)
+                        }
+                    }
+                    banda.piratas.forEach { pirata ->
+                        item {
+                            PirataCard(pirata)
+                        }
                     }
                 }
             }
@@ -68,7 +94,7 @@ fun UserMenu(navController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraDeBusqueda(){
+fun BarraDeBusqueda(onBandaSelected: (Bandas) -> Unit){
     var searchText by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
     val persistence = Persistence()
@@ -98,13 +124,14 @@ fun BarraDeBusqueda(){
                 val filteredBandas =
                     persistence.bandas.filter { it.nombreBanda.contains(searchText) }
                 LazyColumn {
-                    items(filteredBandas) { equipo ->
-
-                        TextButton(onClick = { /*TODO*/}) {
+                    items(filteredBandas) { banda ->
+                        TextButton(onClick = {
+                            onBandaSelected(banda)
+                            searchActive = false
+                        }) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
-                                Text(text = equipo.nombreBanda, modifier = Modifier.padding(start = 20.dp))
-                                Text(text = "Yúnez, chúpamela", modifier = Modifier.padding(start = 20.dp))
+                                Text(text = banda.nombreBanda, modifier = Modifier.padding(start = 20.dp))
                             }
                         }
                     }
