@@ -1,11 +1,8 @@
 ﻿package com.aguerecoders.actividadevaluativados.menus
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,17 +30,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import com.aguerecoders.actividadevaluativados.models.Bandas
+import com.aguerecoders.actividadevaluativados.models.Banda
 
 @Composable
 fun UserMenu(navController: NavHostController) {
+
     val persistence = Persistence()
-    var selectedBanda by remember { mutableStateOf<Bandas?>(null) }
+    var selectedBanda by remember { mutableStateOf<Banda?>(null) }
 
     Column {
         BarraDeBusqueda(onBandaSelected = { selectedBanda = it })
@@ -68,24 +63,23 @@ fun UserMenu(navController: NavHostController) {
                     }
                 }
             } else {
-                persistence.bandas.forEach { banda ->
-                    item {
-                        Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
-                            Image(painter = painterResource(id = banda.imagenBanda),
-                                contentDescription = banda.nombreBanda,
-                                modifier = Modifier.size(70.dp)
-                            )
-                            Text(text = banda.nombreBanda,
-                                modifier = Modifier.padding(16.dp),
-                                fontSize = 25.sp)
-                        }
-                    }
-                    banda.piratas.forEach { pirata ->
-                        item {
-                            PirataCard(pirata)
-                        }
-                    }
-                }
+//                persistence.bandas.forEach { banda ->
+//                    item {
+//                        Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
+//                            Image(painter = painterResource(id = banda.imagenBanda),
+//                                contentDescription = banda.nombreBanda,
+//                                modifier = Modifier.size(70.dp)
+//                            )
+//                            Text(text = banda.nombreBanda,
+//                                modifier = Modifier.padding(16.dp),
+//                                fontSize = 25.sp)
+//                        }
+//                    }
+//                    banda.piratas.forEach { pirata ->
+//                        item {
+//                            PirataCard(pirata)
+//                        }
+//                    }
             }
         }
     }
@@ -94,7 +88,7 @@ fun UserMenu(navController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraDeBusqueda(onBandaSelected: (Bandas) -> Unit){
+fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit){
     var searchText by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
     val persistence = Persistence()
@@ -167,7 +161,6 @@ fun PirataCard(pirata: Pirata) {
                         .padding(start = 20.dp)
                 )
             }
-            // Este contenido se mostrará cuando la tarjeta esté expandida
             if (expanded) {
                 /*TODO aqui va el ataque y todo eso*/
                 Text(

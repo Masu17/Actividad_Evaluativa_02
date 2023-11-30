@@ -1,7 +1,7 @@
 package com.aguerecoders.actividadevaluativados.services
 
 import com.aguerecoders.actividadevaluativados.R
-import com.aguerecoders.actividadevaluativados.models.Bandas
+import com.aguerecoders.actividadevaluativados.models.Banda
 import com.aguerecoders.actividadevaluativados.models.Pirata
 
 class Persistence {
@@ -43,11 +43,15 @@ class Persistence {
     )
 
 
-    var bandas = listOf<Bandas>(
-        Bandas("Sombrero de Paja", sombreroPaja, R.drawable.bandera_sombrero_paja),
-        Bandas("Piratas de Rocks", piratasRocks, R.drawable.bandera_sombrero_paja),
-        Bandas("Marina", marina, R.drawable.bandera_sombrero_paja),
-        Bandas("Piratas del Pelirrojo", piratasPelirrojo, R.drawable.bandera_sombrero_paja)
+    var bandas = listOf<Banda>(
+        Banda("Sombrero de Paja", sombreroPaja, R.drawable.bandera_sombrero_paja),
+        Banda("Piratas de Rocks", piratasRocks, R.drawable.bandera_sombrero_paja),
+        Banda("Marina", marina, R.drawable.bandera_sombrero_paja),
+        Banda("Piratas del Pelirrojo", piratasPelirrojo, R.drawable.bandera_sombrero_paja)
+    )
+
+    var equipo = listOf<Pirata>(
+
     )
 
 }

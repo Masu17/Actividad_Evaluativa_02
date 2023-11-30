@@ -2,10 +2,6 @@ package com.aguerecoders.actividadevaluativados.components
 
 
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -19,17 +15,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.aguerecoders.actividadevaluativados.models.Bandas
-import com.aguerecoders.actividadevaluativados.models.Pirata
+import com.aguerecoders.actividadevaluativados.models.Banda
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BandBox(
     selectedBanda: MutableState<String>,
-    ListaBanda: List<Bandas>,
+    ListaBanda: List<Banda>,
     selectedBandaId: MutableState<Int>,
 ) {
 
@@ -64,7 +57,7 @@ fun BandBox(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PirataButton(
-    selectedPiratas: List<Bandas>,
+    selectedPiratas: List<Banda>,
     selectedBanda: MutableState<String>,
     navController: NavController,
     selectedPirata: MutableState<String>,
