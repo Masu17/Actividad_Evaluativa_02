@@ -2,8 +2,10 @@
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,15 +31,37 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.aguerecoders.actividadevaluativados.R
+import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
 
 @Composable
 fun UserMenu(navController: NavHostController) {
+    val persistence = Persistence()
     Column {
         BarraDeBusqueda()
-        ModeloCard()
+        LazyColumn {
+            persistence.bandas.forEach { banda ->
+                item {
+                    Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
+                        Image(painter = painterResource(id = banda.imagenBanda),
+                            contentDescription = banda.nombreBanda,
+                            modifier = Modifier.size(70.dp)
+                        )
+                        Text(text = banda.nombreBanda,
+                            modifier = Modifier.padding(16.dp),
+                            fontSize = 25.sp)
+                    }
+                }
+                banda.piratas.forEach { pirata ->
+                    item {
+                        PirataCard(pirata)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -80,6 +104,7 @@ fun BarraDeBusqueda(){
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
                                 Text(text = equipo.nombreBanda, modifier = Modifier.padding(start = 20.dp))
+                                Text(text = "Yúnez, chúpamela", modifier = Modifier.padding(start = 20.dp))
                             }
                         }
                     }
@@ -89,40 +114,43 @@ fun BarraDeBusqueda(){
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModeloCard() {
+fun PirataCard(pirata: Pirata) {
     var expanded by remember { mutableStateOf(false) }
-    Column {
-        Card(
+    Card(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        onClick = { expanded = !expanded },
+    ) {
+        Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(16.dp)
-                .fillMaxWidth(),
-            onClick = { expanded = !expanded }
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(painter = painterResource(id = R.drawable.luffy_removebg_preview),
-                        contentDescription = "Luffy",
-                        modifier = Modifier.size(70.dp) // Asegúrate de que el tamaño de la imagen sea consistente
-                    )
-                    Text(text = "Monkey D. Luffy",
-                        modifier = Modifier.align(Alignment.CenterVertically).padding(start = 20.dp)
-                    )
-                }
-                // Este contenido se mostrará cuando la tarjeta esté expandida
-                if (expanded) {
-                    /*TODO aqui va el ataque y todo eso*/
-                    Text(
-                        text = "Lorem ipsum dolor sit amet",
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(painter = painterResource(id = pirata.imagen),
+                    contentDescription = pirata.nombre,
+                    modifier = Modifier.size(70.dp)
+                )
+                Text(text = pirata.nombre,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 20.dp)
+                )
+            }
+            // Este contenido se mostrará cuando la tarjeta esté expandida
+            if (expanded) {
+                /*TODO aqui va el ataque y todo eso*/
+                Text(
+                    text = "Rol: ${pirata.rol}",
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+                Text(
+                    text = "Recompensa: ${pirata.recompensa}",
+                    modifier = Modifier.padding(top = 16.dp)
+                )
             }
         }
     }

@@ -7,7 +7,7 @@ import com.aguerecoders.actividadevaluativados.models.Pirata
 class Persistence {
 
     var sombreroPaja = listOf<Pirata>(
-        Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.luffy_removebg_preview),
         Pirata("Roronoa Zoro", "Ataque", "320.000.000", R.drawable.baseline_visibility_24),
         Pirata("Nami", "Soporte", "66.000.000", R.drawable.baseline_visibility_24),
         Pirata("Usopp", "Ataque", "200.000.000", R.drawable.baseline_visibility_24),
@@ -44,10 +44,10 @@ class Persistence {
 
 
     var bandas = listOf<Bandas>(
-        Bandas("Sombrero de Paja", sombreroPaja),
-        Bandas("Piratas de Rocks", piratasRocks),
-        Bandas("Marina", marina),
-        Bandas("Piratas del Pelirrojo", piratasPelirrojo)
+        Bandas("Sombrero de Paja", sombreroPaja, R.drawable.bandera_sombrero_paja),
+        Bandas("Piratas de Rocks", piratasRocks, R.drawable.bandera_sombrero_paja),
+        Bandas("Marina", marina, R.drawable.bandera_sombrero_paja),
+        Bandas("Piratas del Pelirrojo", piratasPelirrojo, R.drawable.bandera_sombrero_paja)
     )
 
 }
