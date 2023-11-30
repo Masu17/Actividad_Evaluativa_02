@@ -40,7 +40,6 @@ fun UserMenu(navController: NavHostController) {
             query = searchText,
             onQueryChange = { newQuery -> searchText = newQuery },
             onSearch = { query ->
-                // Implementar la lógica de búsqueda aquí
                 println("Buscando: $query")
                 searchActive = false
             },
@@ -57,13 +56,12 @@ fun UserMenu(navController: NavHostController) {
             }
         ) {
             if (searchActive) {
-                val filteredBandas = persistence.bandas.filter { it.contains(searchText) }
+                val filteredBandas = persistence.bandas.filter { it.nombreBanda.contains(searchText) }
                 LazyColumn {
                     items(filteredBandas) { equipo ->
-//                        Text(text = equipo)
                         Button(
                             onClick = { navController.navigate("login") }) {
-                            Text(text = equipo)
+                            Text(text = equipo.nombreBanda)
                         }
                     }
                 }

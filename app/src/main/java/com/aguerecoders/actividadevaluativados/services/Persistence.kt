@@ -1,48 +1,53 @@
 package com.aguerecoders.actividadevaluativados.services
 
+import com.aguerecoders.actividadevaluativados.R
+import com.aguerecoders.actividadevaluativados.models.Bandas
+import com.aguerecoders.actividadevaluativados.models.Pirata
+
 class Persistence {
 
-    var bandas = listOf<String>(
-        "Sombrero de Paja",
-        "Piratas de Rocks",
-        "Marina",
-        "Piratas del Pelirrojo"
-    )
-
-    var sombreroPaja = listOf(
-        "Monkey D. Luffy" to "Sombrero de Paja",
-        "Roronoa Zoro" to "Sombrero de Paja",
-        "Nami" to "Sombrero de Paja",
-        "Usopp" to "Sombrero de Paja",
-        "Sanji" to "Sombrero de Paja",
-        "Tony Tony Chopper" to "Sombrero de Paja",
-        "Nico Robin" to "Sombrero de Paja",
-        "Franky" to "Sombrero de Paja",
-        "Brook" to "Sombrero de Paja",
-        "Jinbe" to "Sombrero de Paja"
+    var sombreroPaja = listOf<Pirata>(
+        Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Roronoa Zoro", "Ataque", "320.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Nami", "Soporte", "66.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Usopp", "Ataque", "200.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Sanji", "Soporte", "330.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Tony Tony Chopper", "Soporte", "100", R.drawable.baseline_visibility_24),
+        Pirata("Nico Robin", "Ataque", "130.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Franky", "Tanque", "94.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Brook", "Soporte", "83.000.000", R.drawable.baseline_visibility_24)
     )
 
     var piratasRocks = listOf(
-        "Charlotte Linlin" to "Piratas de Rocks",
-        "Rocks D. Xebec" to "Piratas de Rocks",
-        "Kaido" to "Piratas de Rocks",
-        "Shiki" to "Piratas de Rocks",
-        "Barbablanca" to "Piratas de Rocks"
+        Pirata("Rocks D. Xebec", "Ataque", "???", R.drawable.baseline_visibility_24),
+        Pirata("Edward Newgate", "Tanque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Charlotte Linlin", "Ataque", "4.388.000.000", R.drawable.baseline_visibility_24),
+        Pirata("Kaido", "Tanque", "4.611.100.000", R.drawable.baseline_visibility_24),
+        Pirata("Shiki", "Ataque", " ", R.drawable.baseline_visibility_24),
     )
 
     var marina = listOf(
-        "Monkey D. Garp" to "Marina",
-        "Sengoku" to "Marina",
-        "Borsalino" to "Marina",
-        "Kizaru" to "Marina"
+        Pirata("Sengoku", "Tanque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Kong", "Tanque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Garp", "Ataque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Kuzan", "Ataque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Sakazuki", "Ataque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Borsalino", "Ataque", " ", R.drawable.baseline_visibility_24),
     )
 
     var piratasPelirrojo = listOf(
-        "Shanks" to "Piratas del Pelirrojo",
-        "Benn Beckman" to "Piratas del Pelirrojo",
-        "Yasopp" to "Piratas del Pelirrojo",
-        "Lucky Roo" to "Piratas del Pelirrojo",
-        "Rockstar" to "Piratas del Pelirrojo"
+        Pirata("Shanks", "Ataque", "4.048.900.000", R.drawable.baseline_visibility_24),
+        Pirata("Benn Beckman", "Ataque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Lucky Roo", "Ataque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Yasopp", "Ataque", " ", R.drawable.baseline_visibility_24),
+    )
+
+
+    var bandas = listOf<Bandas>(
+        Bandas("Sombrero de Paja", sombreroPaja),
+        Bandas("Piratas de Rocks", piratasRocks),
+        Bandas("Marina", marina),
+        Bandas("Piratas del Pelirrojo", piratasPelirrojo)
     )
 
 }
