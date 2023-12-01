@@ -42,7 +42,6 @@ import com.aguerecoders.actividadevaluativados.components.GenericButtonComponent
 import com.aguerecoders.actividadevaluativados.components.GenericTextFieldComponent
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
 fun Login(navController: NavHostController) {
 
     var username by rememberSaveable { mutableStateOf("") }

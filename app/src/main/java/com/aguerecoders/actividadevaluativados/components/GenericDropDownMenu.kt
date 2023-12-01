@@ -2,6 +2,7 @@ package com.aguerecoders.actividadevaluativados.components
 
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -15,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aguerecoders.actividadevaluativados.models.Banda
 
@@ -32,15 +34,16 @@ fun BandBox(
 
     ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = { isExpanded = it }) {
         TextField(
+            label = { Text(text = "Seleccion de la banda")},
             value = if (selectedBanda.value == "") {
-                "Elija una banda"
+                "Selecciona una banda"
             } else {
                 selectedBanda.value
             },
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-            modifier = Modifier.menuAnchor()
+            modifier = Modifier.width(350.dp).menuAnchor()
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             ListaBanda.forEachIndexed() { id, item ->
@@ -56,7 +59,7 @@ fun BandBox(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PirataButton(
+fun PirataBox(
     selectedPiratas: List<Banda>,
     selectedBanda: MutableState<String>,
     navController: NavController,
@@ -75,15 +78,20 @@ fun PirataButton(
         }
     }) {
         TextField(
+            label = { Text(text = "Seleccion del pirata")},
             value = if (selectedBanda.value == "") {
-                "Seleccione un pirata"
+                "No hay una banda seleccionada"
             } else {
-                "Banda de: ${selectedBanda.value}"
+                if (selectedPirata.value == ""){
+                    "Banda: ${selectedBanda.value}"
+                }else{
+                    selectedPirata.value
+                }
             },
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-            modifier = Modifier.menuAnchor()
+            modifier = Modifier.menuAnchor().width(350.dp)
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             if (selectedBanda.value != "") {

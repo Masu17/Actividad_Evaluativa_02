@@ -13,7 +13,7 @@ import com.aguerecoders.actividadevaluativados.menus.UserMenu
 fun GrafoNavegacion() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Rutas.UserMenu.ruta) {
+    NavHost(navController = navController, startDestination = Rutas.CharacterSelection.ruta) {
 
         composable(Rutas.Login.ruta) {
             Login(navController = navController)

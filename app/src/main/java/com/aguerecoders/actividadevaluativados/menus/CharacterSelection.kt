@@ -17,15 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aguerecoders.actividadevaluativados.components.BandBox
-import com.aguerecoders.actividadevaluativados.components.PirataButton
+import com.aguerecoders.actividadevaluativados.components.PirataBox
 import com.aguerecoders.actividadevaluativados.services.Persistence
 
 @Composable
 fun CharacterSelection(navController: NavController) {
 
     val selectedBanda: MutableState<String> = rememberSaveable { mutableStateOf("") }
-    val selectedBandaId : MutableState<Int> = rememberSaveable { mutableStateOf(0) }
-    val selectedPirata : MutableState<String> = rememberSaveable { mutableStateOf("") }
+    val selectedBandaId: MutableState<Int> = rememberSaveable { mutableStateOf(0) }
+    val selectedPirata: MutableState<String> = rememberSaveable { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -35,10 +35,19 @@ fun CharacterSelection(navController: NavController) {
     ) {
         Text(text = "Crear personaje", fontSize = 30.sp)
         Spacer(modifier = Modifier.height(20.dp))
-        BandBox(selectedBanda, Persistence().bandas, selectedBandaId)
+        BandBox(
+            selectedBanda,
+            Persistence().bandas,
+            selectedBandaId
+        )
         Spacer(modifier = Modifier.height(20.dp))
-        PirataButton(Persistence().bandas, selectedBanda, navController, selectedPirata, selectedBandaId)
+        PirataBox(
+            Persistence().bandas,
+            selectedBanda,
+            navController,
+            selectedPirata,
+            selectedBandaId
+        )
     }
-
 }
 
