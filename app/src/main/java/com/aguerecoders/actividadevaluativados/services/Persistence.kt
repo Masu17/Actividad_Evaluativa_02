@@ -51,6 +51,7 @@ class Persistence {
     )
 
     var equipo = listOf<Pirata>(
+        Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.luffy_removebg_preview),
         Pirata("Shanks", "Ataque", "4.048.900.000", R.drawable.baseline_visibility_24),
         Pirata("Kong", "Tanque", " ", R.drawable.baseline_visibility_24),
         Pirata("Garp", "Ataque", " ", R.drawable.baseline_visibility_24),

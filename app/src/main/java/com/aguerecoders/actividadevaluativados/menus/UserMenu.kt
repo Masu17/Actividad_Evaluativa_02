@@ -4,42 +4,54 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
 import com.aguerecoders.actividadevaluativados.models.Banda
+import com.aguerecoders.actividadevaluativados.ui.theme.Marina
+import com.aguerecoders.actividadevaluativados.ui.theme.Pelirrojo
+import com.aguerecoders.actividadevaluativados.ui.theme.Purple80
+import com.aguerecoders.actividadevaluativados.ui.theme.Rocks
+import com.aguerecoders.actividadevaluativados.ui.theme.Sombrero
 
 /*TODO esto es para buscar todos los cards
 @Composable
@@ -156,6 +168,7 @@ fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit) {
 fun UserMenu(navController: NavHostController) {
     val persistence = Persistence()
     var selectedBanda by remember { mutableStateOf<Banda?>(null) }
+    var borrar = remember { mutableStateOf(false) }
 
     Column {
         Text(text = "Menú de usuario")
@@ -164,20 +177,22 @@ fun UserMenu(navController: NavHostController) {
             if (selectedBanda != null) {
                 val equipoFiltrado = persistence.equipo.filter { pirata ->
                     persistence.bandas.any { banda ->
-                        banda.piratas.any { it.nombre == pirata.nombre && banda.nombreBanda == selectedBanda!!.nombreBanda }
+                        banda.piratas.any { it.nombre == pirata.nombre
+                                && banda.nombreBanda == selectedBanda!!.nombreBanda }
                     }
                 }
                 items(equipoFiltrado) { pirata ->
-                    PirataCard(pirata)
+                    PirataCard(pirata, borrar)
                 }
             } else {
                 items(persistence.equipo) { pirata ->
-                    PirataCard(pirata)
+                    PirataCard(pirata, borrar)
                 }
             }
+            item { Spacer(modifier = Modifier.height(50.dp)) }
         }
     }
-    botonesFlotantes(navController = navController)
+    botonesFlotantes(navController = navController, borrar)
 }
 
 
@@ -203,9 +218,11 @@ fun BarraDeBusqueda(onBandaSelected: (Banda?) -> Unit) {
         placeholder = { Text(text = placeHolderText) },
         leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Icono de busqueda") },
         trailingIcon = {
-            IconButton(onClick = { searchActive = false
-            onBandaSelected(null)
-            placeHolderText = "Buscar"}) {
+            IconButton(onClick = {
+                searchActive = false
+                onBandaSelected(null)
+                placeHolderText = "Buscar"
+            }) {
                 Icon(Icons.Filled.Close, contentDescription = "Icono de busqueda")
             }
         }
@@ -237,8 +254,10 @@ fun BarraDeBusqueda(onBandaSelected: (Banda?) -> Unit) {
                     }) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
-                            Text("Mostrar todo",
-                                modifier = Modifier.padding(start = 20.dp))
+                            Text(
+                                "Mostrar todo",
+                                modifier = Modifier.padding(start = 20.dp)
+                            )
                         }
                     }
                 }
@@ -250,82 +269,113 @@ fun BarraDeBusqueda(onBandaSelected: (Banda?) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PirataCard(pirata: Pirata) {
+fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
     var expanded by remember { mutableStateOf(false) }
     val persistence = Persistence()
     val bandaColores = mapOf(
-        "Sombrero de Paja" to Color.Red,
-        "Piratas de Rocks" to Color.LightGray,
-        "Marina" to Color.Blue,
-        "Piratas del Pelirrojo" to Color.Green
+        "Sombrero de Paja" to Sombrero,
+        "Piratas de Rocks" to Rocks,
+        "Marina" to Marina,
+        "Piratas del Pelirrojo" to Pelirrojo
     )
     val pirataBanda = persistence.getBandaPirata(pirata)
     val bandaColor = bandaColores[pirataBanda.nombreBanda] ?: Color.Blue
 
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = bandaColor
-        ),
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        onClick = { expanded = !expanded }
-    ) {
-        Column(
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        {}
+        if (borrar.value) {
+            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+        }
+        Card(
+            colors = CardDefaults.cardColors(
+                containerColor = bandaColor
+            ),
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(16.dp)
+                .fillMaxWidth(),
+            onClick = { expanded = !expanded }
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = pirata.imagen),
-                    contentDescription = pirata.nombre,
-                    modifier = Modifier.size(70.dp)
-                )
-                Text(
-                    text = pirata.nombre,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 20.dp)
-                )
-            }
-            if (expanded) {
-                /*TODO aqui va el ataque y todo eso*/
-                Text(
-                    text = "Rol: ${pirata.rol}",
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                Text(
-                    text = "Recompensa: ${pirata.recompensa}",
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-            }
+            Surface(
+                color = bandaColor,
+                content = {
+                    Image(
+                        painter = painterResource(id = pirataBanda.imagenBanda),
+                        alignment = Alignment.CenterEnd,
+                        contentDescription = "Bandera de la banda",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Image(
+                                painter = painterResource(id = pirata.imagen),
+                                contentDescription = pirata.nombre,
+                                modifier = Modifier.size(70.dp)
+                            )
+                            Text(
+                                text = pirata.nombre,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(start = 20.dp)
+                            )
+                        }
+                        if (expanded) {
+                            /*TODO aqui va el ataque y todo eso*/
+                            Text(
+                                text = "Rol: ${pirata.rol}",
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
+                            Text(text = "Vida: ", modifier = Modifier.padding(top = 16.dp))
+                            Text(text = "Ataque: ", modifier = Modifier.padding(top = 16.dp))
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "Recompensa: ${pirata.recompensa}",
+                                    modifier = Modifier.padding(top = 16.dp)
+                                )
+                                IconButton(onClick = { /*TODO*/ }) {
+                                    Icon(Icons.Default.Info, contentDescription = "Icono de info")
+                                }
+                            }
+                        }
+                    }
+                }
+            )
         }
     }
 }
 
 @Composable
-fun botonesFlotantes(navController: NavHostController) {
-    Column (modifier = Modifier
-        .fillMaxHeight()
-        .fillMaxWidth(),
-        verticalArrangement = Arrangement.Bottom) {
-        Row (modifier = Modifier.fillMaxWidth(),
+fun botonesFlotantes(navController: NavHostController, borrar: MutableState<Boolean>) {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically){
-            FloatingActionButton(onClick = { navController.navigate("addPirata") }) {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ExtendedFloatingActionButton(onClick = { navController.navigate("addPirata") }) {
                 Row {
                     Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
                     Text(text = "Agregar")
                 }
             }
-            FloatingActionButton(onClick = { navController.navigate("pelea") }) {
+            ExtendedFloatingActionButton(onClick = { navController.navigate("pelea") }) {
                 Row {
                     Icon(Icons.Default.Warning, contentDescription = "Icono de pelea")
                     Text(text = "Pelea")
                 }
             }
-            FloatingActionButton(onClick = { navController.navigate("borrarPirata") }) {
+            ExtendedFloatingActionButton(onClick = { borrar.value = !borrar.value }) {
                 Row {
                     Icon(Icons.Default.Warning, contentDescription = "Icono de borrar")
                     Text(text = "Borrar")
