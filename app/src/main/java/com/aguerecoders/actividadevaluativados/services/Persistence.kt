@@ -58,4 +58,14 @@ class Persistence {
         Pirata("Charlotte Linlin", "Ataque", "4.388.000.000", R.drawable.baseline_visibility_24)
         )
 
+
+    fun getBandaPirata(pirata: Pirata): Banda {
+        for (banda in bandas) {
+            if (banda.piratas.contains(pirata)) {
+                return banda
+            }
+        }
+        throw IllegalArgumentException("Pirata no encontrado en ninguna banda")
+    }
+
 }
