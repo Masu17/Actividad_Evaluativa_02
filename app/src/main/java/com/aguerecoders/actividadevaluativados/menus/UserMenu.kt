@@ -1,8 +1,10 @@
 ﻿package com.aguerecoders.actividadevaluativados.menus
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,10 +14,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
@@ -173,6 +177,7 @@ fun UserMenu(navController: NavHostController) {
             }
         }
     }
+    botonesFlotantes(navController = navController)
 }
 
 
@@ -295,6 +300,38 @@ fun PirataCard(pirata: Pirata) {
                     modifier = Modifier.padding(top = 16.dp)
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun botonesFlotantes(navController: NavHostController) {
+    Column (modifier = Modifier
+        .fillMaxHeight()
+        .fillMaxWidth(),
+        verticalArrangement = Arrangement.Bottom) {
+        Row (modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically){
+            FloatingActionButton(onClick = { navController.navigate("addPirata") }) {
+                Row {
+                    Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
+                    Text(text = "Agregar")
+                }
+            }
+            FloatingActionButton(onClick = { navController.navigate("pelea") }) {
+                Row {
+                    Icon(Icons.Default.Warning, contentDescription = "Icono de pelea")
+                    Text(text = "Pelea")
+                }
+            }
+            FloatingActionButton(onClick = { navController.navigate("borrarPirata") }) {
+                Row {
+                    Icon(Icons.Default.Warning, contentDescription = "Icono de borrar")
+                    Text(text = "Borrar")
+                }
+            }
+
         }
     }
 }
