@@ -34,6 +34,7 @@ import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
 import com.aguerecoders.actividadevaluativados.models.Banda
 
+/*TODO esto es para buscar todos los cards
 @Composable
 fun UserMenu(navController: NavHostController) {
 
@@ -46,14 +47,17 @@ fun UserMenu(navController: NavHostController) {
             if (selectedBanda != null) {
                 persistence.bandas.filter { it == selectedBanda }.forEach { banda ->
                     item {
-                        Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
-                            Image(painter = painterResource(id = banda.imagenBanda),
+                        Row(modifier = Modifier.padding(start = 30.dp, top = 30.dp)) {
+                            Image(
+                                painter = painterResource(id = banda.imagenBanda),
                                 contentDescription = banda.nombreBanda,
                                 modifier = Modifier.size(70.dp)
                             )
-                            Text(text = banda.nombreBanda,
+                            Text(
+                                text = banda.nombreBanda,
                                 modifier = Modifier.padding(16.dp),
-                                fontSize = 25.sp)
+                                fontSize = 25.sp
+                            )
                         }
                     }
                     banda.piratas.forEach { pirata ->
@@ -63,32 +67,35 @@ fun UserMenu(navController: NavHostController) {
                     }
                 }
             } else {
-//                persistence.bandas.forEach { banda ->
-//                    item {
-//                        Row (modifier = Modifier.padding(start = 30.dp, top = 30.dp)){
-//                            Image(painter = painterResource(id = banda.imagenBanda),
-//                                contentDescription = banda.nombreBanda,
-//                                modifier = Modifier.size(70.dp)
-//                            )
-//                            Text(text = banda.nombreBanda,
-//                                modifier = Modifier.padding(16.dp),
-//                                fontSize = 25.sp)
-//                        }
-//                    }
-//                    banda.piratas.forEach { pirata ->
-//                        item {
-//                            PirataCard(pirata)
-//                        }
-//                    }
+                persistence.bandas.forEach { banda ->
+                    item {
+                        Row(modifier = Modifier.padding(start = 30.dp, top = 30.dp)) {
+                            Image(
+                                painter = painterResource(id = banda.imagenBanda),
+                                contentDescription = banda.nombreBanda,
+                                modifier = Modifier.size(70.dp)
+                            )
+                            Text(
+                                text = banda.nombreBanda,
+                                modifier = Modifier.padding(16.dp),
+                                fontSize = 25.sp
+                            )
+                        }
+                    }
+                    banda.piratas.forEach { pirata ->
+                        item {
+                            PirataCard(pirata)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit){
+fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit) {
     var searchText by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
     val persistence = Persistence()
@@ -125,7 +132,10 @@ fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit){
                         }) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
-                                Text(text = banda.nombreBanda, modifier = Modifier.padding(start = 20.dp))
+                                Text(
+                                    text = banda.nombreBanda,
+                                    modifier = Modifier.padding(start = 20.dp)
+                                )
                             }
                         }
                     }
@@ -133,7 +143,97 @@ fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit){
             }
         }
     }
+}*/
+
+@Composable
+fun UserMenu(navController: NavHostController) {
+    val persistence = Persistence()
+    var selectedBanda by remember { mutableStateOf<Banda?>(null) }
+
+    Column {
+        Text(text = "Menú de usuario")
+        BarraDeBusqueda(onBandaSelected = { selectedBanda = it })
+        LazyColumn {
+            if (selectedBanda != null) {
+                val equipoFiltrado = persistence.equipo.filter { pirata ->
+                    persistence.bandas.any { banda ->
+                        banda.piratas.any { it.nombre == pirata.nombre && banda.nombreBanda == selectedBanda!!.nombreBanda }
+                    }
+                }
+                items(equipoFiltrado) { pirata ->
+                    PirataCard(pirata)
+                }
+            } else {
+                items(persistence.equipo) { pirata ->
+                    PirataCard(pirata)
+                }
+            }
+        }
+    }
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BarraDeBusqueda(onBandaSelected: (Banda?) -> Unit) {
+    var searchText by remember { mutableStateOf("") }
+    var searchActive by remember { mutableStateOf(false) }
+    val persistence = Persistence()
+
+    SearchBar(
+        query = searchText,
+        onQueryChange = { newQuery -> searchText = newQuery },
+        onSearch = { query ->
+            println("Buscando: $query")
+            searchActive = false
+        },
+        active = searchActive,
+        onActiveChange = { searchActive = it },
+        modifier = Modifier.fillMaxWidth(),
+        enabled = true,
+        placeholder = { Text("Buscar") },
+        leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Icono de busqueda") },
+        trailingIcon = {
+            IconButton(onClick = { searchActive = false }) {
+                Icon(Icons.Filled.Close, contentDescription = "Icono de busqueda")
+            }
+        }
+    ) {
+        if (searchActive) {
+            val filteredBandas = persistence.bandas.filter { it.nombreBanda.contains(searchText) }
+            LazyColumn {
+                items(filteredBandas) { banda ->
+                    TextButton(onClick = {
+                        onBandaSelected(banda)
+                        searchActive = false
+                    }) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
+                            Text(
+                                text = banda.nombreBanda,
+                                modifier = Modifier.padding(start = 20.dp)
+                            )
+                        }
+                    }
+                }
+                item {
+                    TextButton(onClick = {
+                        searchActive = false
+                        searchText = ""
+                        onBandaSelected(null)
+                    }) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
+                            Text("Mostrar todo",
+                                modifier = Modifier.padding(start = 20.dp))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -151,11 +251,13 @@ fun PirataCard(pirata: Pirata) {
                 .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(id = pirata.imagen),
+                Image(
+                    painter = painterResource(id = pirata.imagen),
                     contentDescription = pirata.nombre,
                     modifier = Modifier.size(70.dp)
                 )
-                Text(text = pirata.nombre,
+                Text(
+                    text = pirata.nombre,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(start = 20.dp)

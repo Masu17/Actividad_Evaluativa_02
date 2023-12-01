@@ -51,7 +51,11 @@ class Persistence {
     )
 
     var equipo = listOf<Pirata>(
-
-    )
+        Pirata("Shanks", "Ataque", "4.048.900.000", R.drawable.baseline_visibility_24),
+        Pirata("Kong", "Tanque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Garp", "Ataque", " ", R.drawable.baseline_visibility_24),
+        Pirata("Tony Tony Chopper", "Soporte", "100", R.drawable.baseline_visibility_24),
+        Pirata("Charlotte Linlin", "Ataque", "4.388.000.000", R.drawable.baseline_visibility_24)
+        )
 
 }
