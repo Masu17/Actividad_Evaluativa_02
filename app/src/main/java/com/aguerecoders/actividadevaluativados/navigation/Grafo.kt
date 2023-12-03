@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken
 fun GrafoNavegacion() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Rutas.CharacterSelection.ruta) {
+    NavHost(navController = navController, startDestination = Rutas.Login.ruta) {
 
         composable(Rutas.Login.ruta) {
             Login(navController = navController)
