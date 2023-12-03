@@ -1,6 +1,7 @@
 ﻿package com.aguerecoders.actividadevaluativados.menus
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
@@ -37,10 +40,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
 import com.aguerecoders.actividadevaluativados.models.Banda
@@ -169,8 +180,28 @@ fun UserMenu(navController: NavHostController, equipoFinal: List<Pirata>) {
     var selectedBanda by remember { mutableStateOf<Banda?>(null) }
     var borrar = remember { mutableStateOf(false) }
 
+
+    Image(
+        painter = painterResource(id = R.drawable.characterselectionbg),
+        contentDescription = "",
+        modifier = Modifier.fillMaxWidth(),
+        contentScale = ContentScale.FillWidth
+    )
     Column {
-        Text(text = "Menú de usuario")
+        Text(
+            text = "Tu equipo", fontSize = 30.sp,
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+                .width(300.dp)
+                .height(55.dp)
+                .background(Color(0xFF883130))
+                .align(Alignment.CenterHorizontally),
+            color = Color(220, 227, 223),
+            textAlign = TextAlign.Center,
+            fontFamily = FontFamily(
+                Font(R.font.alfa_slab_one, FontWeight.Normal)
+            )
+        )
         BarraDeBusqueda(onBandaSelected = { selectedBanda = it })
         LazyColumn {
             if (selectedBanda != null) {
@@ -378,13 +409,13 @@ fun botonesFlotantes(navController: NavHostController, borrar: MutableState<Bool
                     Text(text = "Agregar")
                 }
             }
-            ExtendedFloatingActionButton(onClick = { "pelea" }) {
+            ExtendedFloatingActionButton(onClick = { navController.navigate(Rutas.TrabajandoEnEllo.ruta) }) {
                 Row {
                     Icon(Icons.Default.Warning, contentDescription = "Icono de pelea")
                     Text(text = "Pelea")
                 }
             }
-            ExtendedFloatingActionButton(onClick = { borrar.value = !borrar.value }) {
+            ExtendedFloatingActionButton(onClick = { /*borrar.value = !borrar.value*/ navController.navigate(Rutas.TrabajandoEnEllo.ruta) }) {
                 Row {
                     Icon(Icons.Default.Warning, contentDescription = "Icono de borrar")
                     Text(text = "Borrar")
