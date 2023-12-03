@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.LocalTextStyle
@@ -74,91 +75,142 @@ fun CharacterSelection(navController: NavController) {
     Image(
         painter = painterResource(id = R.drawable.characterselectionbg),
         contentDescription = "",
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.FillBounds
     )
 
-    Column(
+
+    LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Crear personaje", fontSize = 30.sp,
-            modifier = Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .width(300.dp)
-                .height(55.dp)
-                .background(Color(0xFF883130)),
-            color = Color(220, 227, 223),
-            textAlign = TextAlign.Center,
-            fontFamily = FontFamily(
-                Font(R.font.alfa_slab_one, FontWeight.Normal)
-            ),
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "Seleccione una banda: ",
-            fontSize = 20.sp,
-            modifier = Modifier.width(350.dp),
-            textAlign = TextAlign.Left,
-            style = TextStyle(
-                fontWeight = FontWeight.Black,
-                color = Color.Black,
+        item {
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Crear personaje", fontSize = 30.sp,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .width(300.dp)
+                    .height(55.dp)
+                    .background(Color(0xFF883130)),
+                color = Color(220, 227, 223),
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(
+                    Font(R.font.alfa_slab_one, FontWeight.Normal)
+                ),
             )
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        BandBox(
-            selectedBanda, Persistence().bandas, selectedBandaId
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Seleccione un pirata: ",
-            fontSize = 20.sp,
-            modifier = Modifier.width(350.dp),
-            textAlign = TextAlign.Left,
-            style = TextStyle(
-                fontWeight = FontWeight.Black,
-                color = Color.Black,
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "Seleccione una banda: ",
+                fontSize = 20.sp,
+                modifier = Modifier.width(350.dp),
+                textAlign = TextAlign.Left,
+                style = TextStyle(
+                    fontWeight = FontWeight.Black,
+                    color = Color.Black,
+                )
             )
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        PirataBox(
-            Persistence().bandas,
-            selectedBanda,
-            navController,
-            selectedPirataNombre,
-            selectedPirataRol,
-            selectedPirataRecompensa,
-            selectedPirataImage,
-            selectedBandaId
-        )
-
-        var pirataFinal = Pirata(
-            selectedPirataNombre.value,
-            selectedPirataRol.value,
-            selectedPirataRecompensa.value,
-            selectedPirataImage.value,
-            0,
-            0,
-            "",
-            selectedPirataImageGrande.value
-        )
-
-
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Estadisticas: ",
-            fontSize = 20.sp,
-            modifier = Modifier.width(350.dp),
-            textAlign = TextAlign.Left,
-            style = TextStyle(
-                fontWeight = FontWeight.Black,
-                color = Color.Black,
+            Spacer(modifier = Modifier.height(5.dp))
+            BandBox(
+                selectedBanda, Persistence().bandas, selectedBandaId
             )
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        if (pirataFinal.nombre!!.isEmpty()) {
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Seleccione un pirata: ",
+                fontSize = 20.sp,
+                modifier = Modifier.width(350.dp),
+                textAlign = TextAlign.Left,
+                style = TextStyle(
+                    fontWeight = FontWeight.Black,
+                    color = Color.Black,
+                )
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            PirataBox(
+                Persistence().bandas,
+                selectedBanda,
+                navController,
+                selectedPirataNombre,
+                selectedPirataRol,
+                selectedPirataRecompensa,
+                selectedPirataImage,
+                selectedBandaId
+            )
+
+            var pirataFinal = Pirata(
+                selectedPirataNombre.value,
+                selectedPirataRol.value,
+                selectedPirataRecompensa.value,
+                selectedPirataImage.value,
+                0,
+                0,
+                "",
+                selectedPirataImageGrande.value
+            )
+
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Estadisticas: ",
+                fontSize = 20.sp,
+                modifier = Modifier.width(350.dp),
+                textAlign = TextAlign.Left,
+                style = TextStyle(
+                    fontWeight = FontWeight.Black,
+                    color = Color.Black,
+                )
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            if (pirataFinal.nombre!!.isEmpty()) {
+                Column(
+                    Modifier
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color(0xFFFFE6AF))
+                        .border(7.dp, Color(0xFF883130))
+                        .width(350.dp)
+                        .height(170.dp)
+                        .padding(13.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Nombre: ", fontSize = 18.sp)
+                    Text(text = "Ataque: ", fontSize = 18.sp)
+                    Text(text = "Vida: ", fontSize = 18.sp)
+                    Text(text = "Recompensa: ", fontSize = 18.sp)
+                }
+            } else {
+                Column(
+                    Modifier
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color(0xFFFFE6AF))
+                        .border(7.dp, Color(0xFF883130))
+                        .width(350.dp)
+                        .height(170.dp)
+                        .padding(13.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Nombre: ${pirataFinal.nombre} ", fontSize = 18.sp)
+                    pirataFinal.ataque = pirataFinal.generarAtaqueAleatorio()
+                    Text(text = "Ataque: ${pirataFinal.ataque} ", fontSize = 18.sp)
+                    pirataFinal.vida = pirataFinal.generarVidaAleatoria()
+                    Text(text = "Vida: ${pirataFinal.vida} ", fontSize = 18.sp)
+                    Text(text = "Recompensa: ${pirataFinal.recompensa} ", fontSize = 18.sp)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Text(
+                text = "Equipo: ",
+                fontSize = 20.sp,
+                modifier = Modifier.width(350.dp),
+                textAlign = TextAlign.Left,
+                style = TextStyle(
+                    fontWeight = FontWeight.Black,
+                    color = Color.Black,
+                )
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+
             Column(
                 Modifier
                     .clip(RoundedCornerShape(10.dp))
@@ -169,108 +221,59 @@ fun CharacterSelection(navController: NavController) {
                     .padding(13.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Nombre: ", fontSize = 18.sp)
-                Text(text = "Ataque: ", fontSize = 18.sp)
-                Text(text = "Vida: ", fontSize = 18.sp)
-                Text(text = "Recompensa: ", fontSize = 18.sp)
+                Text(text = nombresEquipo, fontSize = 18.sp)
             }
-        } else {
-            Column(
-                Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(Color(0xFFFFE6AF))
-                    .border(7.dp, Color(0xFF883130))
-                    .width(350.dp)
-                    .height(170.dp)
-                    .padding(13.dp),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "Nombre: ${pirataFinal.nombre} ", fontSize = 18.sp)
-                pirataFinal.ataque = pirataFinal.generarAtaqueAleatorio()
-                Text(text = "Ataque: ${pirataFinal.ataque} ", fontSize = 18.sp)
-                pirataFinal.vida = pirataFinal.generarVidaAleatoria()
-                Text(text = "Vida: ${pirataFinal.vida} ", fontSize = 18.sp)
-                Text(text = "Recompensa: ${pirataFinal.recompensa} ", fontSize = 18.sp)
-            }
-        }
+            Spacer(modifier = Modifier.height(5.dp))
 
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Text(
-            text = "Equipo: ",
-            fontSize = 20.sp,
-            modifier = Modifier.width(350.dp),
-            textAlign = TextAlign.Left,
-            style = TextStyle(
-                fontWeight = FontWeight.Black,
-                color = Color.Black,
-            )
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Column(
-            Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .background(Color(0xFFFFE6AF))
-                .border(7.dp, Color(0xFF883130))
-                .width(350.dp)
-                .height(170.dp)
-                .padding(13.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = nombresEquipo, fontSize = 18.sp)
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Row {
-            Button(onClick = {
-                if (equipoPirata.size >= 5) {
-                    Toast.makeText(
-                        navController.context,
-                        "El equipo solo puede estar formado por 5 piratas",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else if (pirataFinal.ataque!! != 0 && pirataFinal.vida!! != 0) {
-                    var itExists = false
-                    equipoPirata.forEach() {
-                        if (it.nombre == pirataFinal.nombre) {
-                            Toast.makeText(
-                                navController.context,
-                                "El pirata ya esta en el equipo",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            itExists = true
-                        }
-                    }
-
-                    if (!itExists) {
+            Row {
+                Button(onClick = {
+                    if (equipoPirata.size >= 5) {
                         Toast.makeText(
                             navController.context,
-                            "Pirata añadido al equipo correctamente",
+                            "El equipo solo puede estar formado por 5 piratas",
                             Toast.LENGTH_SHORT
                         ).show()
-                        equipoPirata.add(pirataFinal)
-                        nombresEquipo += " ${pirataFinal.nombre} - " + "ATK: ${pirataFinal.ataque} - " + "HP: ${pirataFinal.vida} \n"
-                        longEquipo = equipoPirata.size
-                    }
+                    } else if (pirataFinal.ataque!! != 0 && pirataFinal.vida!! != 0) {
+                        var itExists = false
+                        equipoPirata.forEach() {
+                            if (it.nombre == pirataFinal.nombre) {
+                                Toast.makeText(
+                                    navController.context,
+                                    "El pirata ya esta en el equipo",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                itExists = true
+                            }
+                        }
 
-                } else {
-                    Toast.makeText(
-                        navController.context, "Seleccione un pirata valido", Toast.LENGTH_SHORT
-                    ).show()
+                        if (!itExists) {
+                            Toast.makeText(
+                                navController.context,
+                                "Pirata añadido al equipo correctamente",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            equipoPirata.add(pirataFinal)
+                            nombresEquipo += " ${pirataFinal.nombre} - " + "ATK: ${pirataFinal.ataque} - " + "HP: ${pirataFinal.vida} \n"
+                            longEquipo = equipoPirata.size
+                        }
+
+                    } else {
+                        Toast.makeText(
+                            navController.context, "Seleccione un pirata valido", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }) {
+                    Text(text = "Añadir ${longEquipo}/5")
                 }
-            }) {
-                Text(text = "Añadir ${longEquipo}/5")
-            }
-            Button(onClick = {
-                val piratasStringJSON = Gson().toJson(ArrayList(equipoPirata))
-                println(piratasStringJSON)
-                navController.navigate(Rutas.UserMenu.ruta + "/{$piratasStringJSON}")
-            }) {
-                Text(text = "Guardar equipo y continuar")
+                Button(onClick = {
+                    val piratasStringJSON = Gson().toJson(ArrayList(equipoPirata))
+                    println(piratasStringJSON)
+                    navController.navigate(Rutas.UserMenu.ruta + "/{$piratasStringJSON}")
+                }) {
+                    Text(text = "Guardar equipo y continuar")
+                }
             }
         }
-
 
     }
 }
