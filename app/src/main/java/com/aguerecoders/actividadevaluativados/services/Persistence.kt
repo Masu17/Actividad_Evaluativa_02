@@ -23,7 +23,7 @@ class Persistence {
             0,0, stringProvider.bioChopper(), R.drawable.chopper_grande),
         Pirata("Nico Robin", "Ataque", "130.000.000", R.drawable.robin,
             0,0, stringProvider.bioRobin(), R.drawable.robin_grande),
-        Pirata("Franky", "Tanque", "94.000.000", R.drawable.baseline_visibility_24,
+        Pirata("Franky", "Tanque", "94.000.000", R.drawable.franky,
             0,0, stringProvider.bioFranky(), R.drawable.franky_grande),
         Pirata("Brook", "Soporte", "83.000.000", R.drawable.brook,
             0,0, stringProvider.bioBrook(), R.drawable.brook_grande)
