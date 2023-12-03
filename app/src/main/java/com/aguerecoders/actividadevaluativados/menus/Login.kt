@@ -58,6 +58,7 @@ import androidx.navigation.NavHostController
 import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.components.GenericButtonComponent
 import com.aguerecoders.actividadevaluativados.components.GenericTextFieldComponent
+import com.aguerecoders.actividadevaluativados.navigation.Rutas
 
 @Composable
 fun Login(navController: NavHostController) {
@@ -118,7 +119,7 @@ fun Login(navController: NavHostController) {
         Spacer(Modifier.height(20.dp))
         GenericButtonComponent(texto = "Iniciar sesion") {
             if (username == "admin" && password == "admin") {
-                navController.navigate("UserMenu")
+                navController.navigate(Rutas.UserMenu.ruta)
             } else {
                 Toast.makeText(
                     navController.context,
