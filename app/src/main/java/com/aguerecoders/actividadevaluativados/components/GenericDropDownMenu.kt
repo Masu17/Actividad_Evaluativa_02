@@ -2,6 +2,7 @@ package com.aguerecoders.actividadevaluativados.components
 
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.aguerecoders.actividadevaluativados.models.Banda
@@ -43,7 +45,9 @@ fun BandBox(
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-            modifier = Modifier.width(350.dp).menuAnchor()
+            modifier = Modifier
+                .width(350.dp)
+                .menuAnchor()
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             ListaBanda.forEachIndexed() { id, item ->
@@ -63,7 +67,10 @@ fun PirataBox(
     selectedPiratas: List<Banda>,
     selectedBanda: MutableState<String>,
     navController: NavController,
-    selectedPirata: MutableState<String>,
+    selectedPirataNombre: MutableState<String>,
+    selectedPiraRol: MutableState<String>,
+    selectedPirataRecompensa: MutableState<String>,
+    selectedPirataImage: MutableState<Int>,
     selectedBandaId: MutableState<Int>,
 ) {
     var isExpanded by remember {
@@ -82,22 +89,27 @@ fun PirataBox(
             value = if (selectedBanda.value == "") {
                 "No hay una banda seleccionada"
             } else {
-                if (selectedPirata.value == ""){
+                if (selectedPirataNombre.value == ""){
                     "Banda: ${selectedBanda.value}"
                 }else{
-                    selectedPirata.value
+                    selectedPirataNombre.value
                 }
             },
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
-            modifier = Modifier.menuAnchor().width(350.dp)
+            modifier = Modifier
+                .menuAnchor()
+                .width(350.dp)
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             if (selectedBanda.value != "") {
                 selectedPiratas[selectedBandaId.value].piratas.forEach { item ->
-                    DropdownMenuItem(text = { Text(text = item.nombre) }, onClick = {
-                        selectedPirata.value = item.nombre
+                    DropdownMenuItem(text = { item.nombre?.let { Text(text = it) } }, onClick = {
+                        selectedPirataNombre.value = item.nombre.toString()
+                        selectedPiraRol.value = item.rol.toString()
+                        selectedPirataRecompensa.value = item.recompensa.toString()
+                        selectedPirataImage.value = item.imagen!!
                         isExpanded = false
                     })
                 }

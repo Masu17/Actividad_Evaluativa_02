@@ -50,20 +50,15 @@ class Persistence {
         Banda("Piratas del Pelirrojo", piratasPelirrojo, R.drawable.bandera_sombrero_paja)
     )
 
-    var equipo = listOf<Pirata>(
-        Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.luffy_removebg_preview),
-        Pirata("Shanks", "Ataque", "4.048.900.000", R.drawable.baseline_visibility_24),
-        Pirata("Kong", "Tanque", " ", R.drawable.baseline_visibility_24),
-        Pirata("Garp", "Ataque", " ", R.drawable.baseline_visibility_24),
-        Pirata("Tony Tony Chopper", "Soporte", "100", R.drawable.baseline_visibility_24),
-        Pirata("Charlotte Linlin", "Ataque", "4.388.000.000", R.drawable.baseline_visibility_24)
-        )
-
+    var equipo = mutableListOf<Pirata>(
+    )
 
     fun getBandaPirata(pirata: Pirata): Banda {
         for (banda in bandas) {
-            if (banda.piratas.contains(pirata)) {
-                return banda
+            for (pirataBanda in banda.piratas) {
+                if (pirataBanda.nombre == pirata.nombre) {
+                    return banda
+                }
             }
         }
         throw IllegalArgumentException("Pirata no encontrado en ninguna banda")

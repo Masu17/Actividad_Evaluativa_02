@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -38,18 +37,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.aguerecoders.actividadevaluativados.services.Persistence
 import com.aguerecoders.actividadevaluativados.models.Banda
+import com.aguerecoders.actividadevaluativados.navigation.Rutas
 import com.aguerecoders.actividadevaluativados.ui.theme.Marina
 import com.aguerecoders.actividadevaluativados.ui.theme.Pelirrojo
-import com.aguerecoders.actividadevaluativados.ui.theme.Purple80
 import com.aguerecoders.actividadevaluativados.ui.theme.Rocks
 import com.aguerecoders.actividadevaluativados.ui.theme.Sombrero
 
@@ -165,7 +162,7 @@ fun BarraDeBusqueda(onBandaSelected: (Banda) -> Unit) {
 }*/
 
 @Composable
-fun UserMenu(navController: NavHostController) {
+fun UserMenu(navController: NavHostController, equipoFinal: List<Pirata>) {
     val persistence = Persistence()
     var selectedBanda by remember { mutableStateOf<Banda?>(null) }
     var borrar = remember { mutableStateOf(false) }
@@ -175,7 +172,7 @@ fun UserMenu(navController: NavHostController) {
         BarraDeBusqueda(onBandaSelected = { selectedBanda = it })
         LazyColumn {
             if (selectedBanda != null) {
-                val equipoFiltrado = persistence.equipo.filter { pirata ->
+                val equipoFiltrado = equipoFinal.filter { pirata ->
                     persistence.bandas.any { banda ->
                         banda.piratas.any { it.nombre == pirata.nombre
                                 && banda.nombreBanda == selectedBanda!!.nombreBanda }
@@ -185,7 +182,7 @@ fun UserMenu(navController: NavHostController) {
                     PirataCard(pirata, borrar)
                 }
             } else {
-                items(persistence.equipo) { pirata ->
+                items(equipoFinal) { pirata ->
                     PirataCard(pirata, borrar)
                 }
             }
@@ -310,17 +307,21 @@ fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
                             .padding(16.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Image(
-                                painter = painterResource(id = pirata.imagen),
-                                contentDescription = pirata.nombre,
-                                modifier = Modifier.size(70.dp)
-                            )
-                            Text(
-                                text = pirata.nombre,
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(start = 20.dp)
-                            )
+                            pirata.imagen?.let { painterResource(id = it) }?.let {
+                                Image(
+                                    painter = it,
+                                    contentDescription = pirata.nombre,
+                                    modifier = Modifier.size(70.dp)
+                                )
+                            }
+                            pirata.nombre?.let {
+                                Text(
+                                    text = it,
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                        .padding(start = 20.dp)
+                                )
+                            }
                         }
                         if (expanded) {
                             /*TODO aqui va el ataque y todo eso*/
@@ -363,7 +364,7 @@ fun botonesFlotantes(navController: NavHostController, borrar: MutableState<Bool
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ExtendedFloatingActionButton(onClick = { navController.navigate("addPirata") }) {
+            ExtendedFloatingActionButton(onClick = { navController.navigate(Rutas.CharacterSelection.ruta) }) {
                 Row {
                     Icon(Icons.Default.Person, contentDescription = "Icono de agregar")
                     Text(text = "Agregar")
