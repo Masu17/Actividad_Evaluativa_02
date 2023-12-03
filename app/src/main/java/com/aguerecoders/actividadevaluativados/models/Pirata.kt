@@ -1,6 +1,5 @@
 package com.aguerecoders.actividadevaluativados.models
 
-import androidx.compose.ui.graphics.painter.Painter
 import com.aguerecoders.actividadevaluativados.R
 import kotlin.random.Random
 
@@ -11,6 +10,8 @@ data class Pirata(
     val imagen: Int? = R.drawable.baseline_visibility_24,
     var vida: Int? = 0,
     var ataque: Int? = 0,
+    var biografia: String? = "",
+    val imagenGrande: Int? = R.drawable.baseline_arrow_drop_down_24
 ) {
     fun generarAtaqueAleatorio(): Int {
         if (this.rol.equals("Ataque")) {

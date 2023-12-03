@@ -5,6 +5,7 @@ sealed class Rutas(val ruta: String) {
     object UserMenu : Rutas("userMenu")
     object CharacterSelection : Rutas("characterSelection")
     object BattleMenu : Rutas("battle")
+    object PirateInfo : Rutas("informacionPirata")
 
 
 }
