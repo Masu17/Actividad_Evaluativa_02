@@ -49,6 +49,8 @@ import com.aguerecoders.actividadevaluativados.ui.theme.Marina
 import com.aguerecoders.actividadevaluativados.ui.theme.Pelirrojo
 import com.aguerecoders.actividadevaluativados.ui.theme.Rocks
 import com.aguerecoders.actividadevaluativados.ui.theme.Sombrero
+import com.google.gson.Gson
+import java.util.ArrayList
 
 /*TODO esto es para buscar todos los cards
 @Composable
@@ -342,6 +344,7 @@ fun PirataCard(navController: NavHostController, pirata: Pirata, borrar: Mutable
                                 )
                                 IconButton(onClick = {
                                     navController.navigate(Rutas.PirateInfo.ruta + "/${pirata.nombre}")
+                                    val piratasStringJSON = Gson().toJson(ArrayList(equipoPirata))
                                 }) {
                                     Icon(Icons.Default.Info, contentDescription = "Icono de info")
                                 }

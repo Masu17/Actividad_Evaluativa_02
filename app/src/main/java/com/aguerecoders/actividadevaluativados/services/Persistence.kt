@@ -8,7 +8,8 @@ class Persistence {
 
     var sombreroPaja = listOf<Pirata>(
         Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.luffy_removebg_preview,
-            0,0,"", R.drawable.luffy_grande),
+            0,0,
+            "Capitanazo", R.drawable.luffy_grande),
         Pirata("Roronoa Zoro", "Ataque", "320.000.000", R.drawable.baseline_visibility_24),
         Pirata("Nami", "Soporte", "66.000.000", R.drawable.baseline_visibility_24),
         Pirata("Usopp", "Ataque", "200.000.000", R.drawable.baseline_visibility_24),
@@ -21,7 +22,8 @@ class Persistence {
 
     var piratasRocks = listOf(
         Pirata("Rocks D. Xebec", "Ataque", "22", R.drawable.baseline_visibility_24),
-        Pirata("Edward Newgate", "Tanque", " ", R.drawable.barba_blanca, 0,0,"", R.drawable.barba_blanca_grande),
+        Pirata("Edward Newgate", "Tanque", " ", R.drawable.barba_blanca, 0,0,
+            "", R.drawable.barba_blanca_grande),
         Pirata("Charlotte Linlin", "Ataque", "4.388.000.000", R.drawable.baseline_visibility_24),
         Pirata("Kaido", "Tanque", "4.611.100.000", R.drawable.baseline_visibility_24),
         Pirata("Shiki", "Ataque", " ", R.drawable.baseline_visibility_24),
