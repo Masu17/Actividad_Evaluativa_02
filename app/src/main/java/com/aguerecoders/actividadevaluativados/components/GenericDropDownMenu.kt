@@ -3,6 +3,7 @@ package com.aguerecoders.actividadevaluativados.components
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,6 +11,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -17,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -36,7 +39,7 @@ fun BandBox(
 
     ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = { isExpanded = it }) {
         TextField(
-            label = { Text(text = "Seleccion de la banda")},
+            label = { Text(text = "Seleccion de la banda") },
             value = if (selectedBanda.value == "") {
                 "Selecciona una banda"
             } else {
@@ -47,7 +50,14 @@ fun BandBox(
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
             modifier = Modifier
                 .width(350.dp)
-                .menuAnchor()
+                .menuAnchor(),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFFFFE6AF),
+                unfocusedContainerColor = Color(0xFFFFE6AF),
+                disabledContainerColor = Color(0xFF154962),
+                focusedIndicatorColor = Color(0xFF154962),
+                unfocusedIndicatorColor = Color(0xFF5E796B),
+            )
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             ListaBanda.forEachIndexed() { id, item ->
@@ -85,13 +95,13 @@ fun PirataBox(
         }
     }) {
         TextField(
-            label = { Text(text = "Seleccion del pirata")},
+            label = { Text(text = "Seleccion del pirata") },
             value = if (selectedBanda.value == "") {
                 "No hay una banda seleccionada"
             } else {
-                if (selectedPirataNombre.value == ""){
+                if (selectedPirataNombre.value == "") {
                     "Banda: ${selectedBanda.value}"
-                }else{
+                } else {
                     selectedPirataNombre.value
                 }
             },
@@ -100,7 +110,14 @@ fun PirataBox(
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
             modifier = Modifier
                 .menuAnchor()
-                .width(350.dp)
+                .width(350.dp),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFFFFE6AF),
+                unfocusedContainerColor = Color(0xFFFFE6AF),
+                disabledContainerColor = Color(0xFF154962),
+                focusedIndicatorColor = Color(0xFF154962),
+                unfocusedIndicatorColor = Color(0xFF5E796B),
+            )
         )
         ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }) {
             if (selectedBanda.value != "") {
