@@ -279,6 +279,8 @@ fun PirataCard(navController: NavHostController, pirata: Pirata, borrar: Mutable
     )
     val pirataBanda = persistence.getBandaPirata(pirata)
     val bandaColor = bandaColores[pirataBanda.nombreBanda] ?: Color.Blue
+    val ataquePirata = pirata.ataque?.toInt() ?: 0
+    val vidaPirata = pirata.vida?.toInt() ?: 0
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         {}
@@ -322,7 +324,8 @@ fun PirataCard(navController: NavHostController, pirata: Pirata, borrar: Mutable
                                 painter = painterResource(id = pirataBanda.imagenBanda),
                                 alignment = Alignment.CenterEnd,
                                 contentDescription = "Bandera de la banda",
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
                                     .size(60.dp)
                             )
                         }
@@ -343,8 +346,7 @@ fun PirataCard(navController: NavHostController, pirata: Pirata, borrar: Mutable
                                     modifier = Modifier.padding(top = 16.dp)
                                 )
                                 IconButton(onClick = {
-                                    navController.navigate(Rutas.PirateInfo.ruta + "/${pirata.nombre}")
-                                    val piratasStringJSON = Gson().toJson(ArrayList(equipoPirata))
+                                    navController.navigate(Rutas.PirateInfo.ruta + "/${pirata.nombre}" + "/${pirata.ataque}" + "/${pirata.vida}")
                                 }) {
                                     Icon(Icons.Default.Info, contentDescription = "Icono de info")
                                 }

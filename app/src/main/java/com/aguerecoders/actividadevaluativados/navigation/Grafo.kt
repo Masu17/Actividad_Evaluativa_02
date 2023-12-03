@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken
 fun GrafoNavegacion() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Rutas.Login.ruta) {
+    NavHost(navController = navController, startDestination = Rutas.CharacterSelection.ruta) {
 
         composable(Rutas.Login.ruta) {
             Login(navController = navController)
@@ -56,9 +56,11 @@ fun GrafoNavegacion() {
             BattleMenu(navController = navController)
         }
 
-        composable(Rutas.PirateInfo.ruta + "/{nombrePirata}") { backStackEntry ->
-            val nombrePirata = backStackEntry.arguments?.getString("nombrePirata")
-            PirateInfo(nombrePirata)
+        composable(Rutas.PirateInfo.ruta + "/{nombrePirata}" + "/{ataquePirata}" + "/{vidaPirata}") {
+            val nombrePirata = it.arguments?.getString("nombrePirata")
+            val ataquePirata = it.arguments?.getString("ataquePirata")
+            val vidaPirata = it.arguments?.getString("vidaPirata")
+            PirateInfo(nombrePirata, ataquePirata, vidaPirata)
         }
     }
 }

@@ -1,15 +1,22 @@
 package com.aguerecoders.actividadevaluativados.services
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import com.aguerecoders.actividadevaluativados.R
 import com.aguerecoders.actividadevaluativados.models.Banda
 import com.aguerecoders.actividadevaluativados.models.Pirata
+
 
 class Persistence {
 
     var sombreroPaja = listOf<Pirata>(
         Pirata("Monkey D. Luffy", "Ataque", "1.500.000.000", R.drawable.luffy_removebg_preview,
             0,0,
-            "Capitanazo", R.drawable.luffy_grande),
+            "Pitan", R.drawable.luffy_grande),
         Pirata("Roronoa Zoro", "Ataque", "320.000.000", R.drawable.baseline_visibility_24),
         Pirata("Nami", "Soporte", "66.000.000", R.drawable.baseline_visibility_24),
         Pirata("Usopp", "Ataque", "200.000.000", R.drawable.baseline_visibility_24),
@@ -74,3 +81,16 @@ class Persistence {
     }
 
 }
+
+//@Composable
+//fun Biografias(pirata: Pirata, String: String) {
+//    val nombrePirata = pirata.nombre!!
+//    stringResource(P)
+//
+//    Text(
+//        text = pirata.biografia!!,
+//        fontSize = 20.sp,
+//        modifier = Modifier.fillMaxWidth(),
+//        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+//    )
+//}

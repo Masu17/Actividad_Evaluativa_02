@@ -25,7 +25,7 @@ fun PirateImagen(pirata: Pirata) {
 }
 
 @Composable
-fun PirateInfo(nombrePirata: String?) {
+fun PirateInfo(nombrePirata: String?, ataquePirata: String?, vidaPirata: String?) {
     val persistence = Persistence()
     val pirata = persistence.getPirataPorNombre(nombrePirata)
     val imagenPirata = painterResource(id = pirata.imagenGrande!!)
@@ -46,8 +46,8 @@ fun PirateInfo(nombrePirata: String?) {
         Spacer(modifier = Modifier.size(20.dp))
         FormatoTexto("Rol: ${pirata.rol!!}")
         FormatoTexto("Recompensa: ${pirata.recompensa!!}")
-        FormatoTexto("Ataque: ${pirata.ataque!!}")
-        FormatoTexto("Vida: ${pirata.vida!!}")
+        FormatoTexto("Ataque: ${ataquePirata!!}")
+        FormatoTexto("Vida: ${vidaPirata!!}")
         FormatoTexto("Biografía: ${pirata.biografia!!}")
     }
 }
