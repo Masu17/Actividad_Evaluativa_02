@@ -75,7 +75,8 @@ fun CharacterSelection(navController: NavController) {
     Image(
         painter = painterResource(id = R.drawable.characterselectionbg),
         contentDescription = "",
-        contentScale = ContentScale.FillBounds
+        modifier = Modifier.fillMaxWidth(),
+        contentScale = ContentScale.FillWidth
     )
 
 

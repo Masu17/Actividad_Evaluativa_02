@@ -9,6 +9,7 @@ import com.aguerecoders.actividadevaluativados.menus.BattleMenu
 import com.aguerecoders.actividadevaluativados.menus.CharacterSelection
 import com.aguerecoders.actividadevaluativados.menus.PirateInfo
 import com.aguerecoders.actividadevaluativados.menus.Login
+import com.aguerecoders.actividadevaluativados.menus.TrabajandoEnEllo
 import com.aguerecoders.actividadevaluativados.menus.UserMenu
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.google.gson.Gson
@@ -61,6 +62,10 @@ fun GrafoNavegacion() {
             val ataquePirata = it.arguments?.getString("ataquePirata")
             val vidaPirata = it.arguments?.getString("vidaPirata")
             PirateInfo(nombrePirata, ataquePirata, vidaPirata)
+        }
+
+        composable(Rutas.TrabajandoEnEllo.ruta) {
+            TrabajandoEnEllo(navController = navController)
         }
     }
 }
