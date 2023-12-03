@@ -179,11 +179,11 @@ fun UserMenu(navController: NavHostController, equipoFinal: List<Pirata>) {
                     }
                 }
                 items(equipoFiltrado) { pirata ->
-                    PirataCard(pirata, borrar)
+                    PirataCard(navController ,pirata, borrar)
                 }
             } else {
                 items(equipoFinal) { pirata ->
-                    PirataCard(pirata, borrar)
+                    PirataCard(navController, pirata, borrar)
                 }
             }
             item { Spacer(modifier = Modifier.height(50.dp)) }
@@ -266,7 +266,7 @@ fun BarraDeBusqueda(onBandaSelected: (Banda?) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
+fun PirataCard(navController: NavHostController, pirata: Pirata, borrar: MutableState<Boolean>) {
     var expanded by remember { mutableStateOf(false) }
     val persistence = Persistence()
     val bandaColores = mapOf(
@@ -295,12 +295,6 @@ fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
             Surface(
                 color = bandaColor,
                 content = {
-                    Image(
-                        painter = painterResource(id = pirataBanda.imagenBanda),
-                        alignment = Alignment.CenterEnd,
-                        contentDescription = "Bandera de la banda",
-                        modifier = Modifier.fillMaxWidth()
-                    )
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -322,6 +316,13 @@ fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
                                         .padding(start = 20.dp)
                                 )
                             }
+                            Image(
+                                painter = painterResource(id = pirataBanda.imagenBanda),
+                                alignment = Alignment.CenterEnd,
+                                contentDescription = "Bandera de la banda",
+                                modifier = Modifier.fillMaxWidth()
+                                    .size(60.dp)
+                            )
                         }
                         if (expanded) {
                             /*TODO aqui va el ataque y todo eso*/
@@ -329,8 +330,8 @@ fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
                                 text = "Rol: ${pirata.rol}",
                                 modifier = Modifier.padding(top = 16.dp)
                             )
-                            Text(text = "Vida: ", modifier = Modifier.padding(top = 16.dp))
-                            Text(text = "Ataque: ", modifier = Modifier.padding(top = 16.dp))
+                            Text(text = "Vida: ${pirata.vida}", modifier = Modifier.padding(top = 16.dp))
+                            Text(text = "Ataque: ${pirata.ataque}", modifier = Modifier.padding(top = 16.dp))
                             Row(
                                 Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
@@ -339,7 +340,9 @@ fun PirataCard(pirata: Pirata, borrar: MutableState<Boolean>) {
                                     text = "Recompensa: ${pirata.recompensa}",
                                     modifier = Modifier.padding(top = 16.dp)
                                 )
-                                IconButton(onClick = { /*TODO*/ }) {
+                                IconButton(onClick = {
+                                    navController.navigate(Rutas.PirateInfo.ruta + "/${pirata.nombre}")
+                                }) {
                                     Icon(Icons.Default.Info, contentDescription = "Icono de info")
                                 }
                             }
@@ -370,7 +373,7 @@ fun botonesFlotantes(navController: NavHostController, borrar: MutableState<Bool
                     Text(text = "Agregar")
                 }
             }
-            ExtendedFloatingActionButton(onClick = { navController.navigate("pelea") }) {
+            ExtendedFloatingActionButton(onClick = { "pelea" }) {
                 Row {
                     Icon(Icons.Default.Warning, contentDescription = "Icono de pelea")
                     Text(text = "Pelea")

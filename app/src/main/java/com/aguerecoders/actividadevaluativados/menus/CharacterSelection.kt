@@ -46,6 +46,7 @@ fun CharacterSelection(navController: NavController) {
     val selectedPirataRol: MutableState<String> = rememberSaveable { mutableStateOf("") }
     val selectedPirataImage : MutableState<Int> = rememberSaveable { mutableIntStateOf(0) }
     val selectedPirataRecompensa: MutableState<String> = rememberSaveable { mutableStateOf("") }
+    val selectedPirataImageGrande: MutableState<Int> = rememberSaveable { mutableIntStateOf(0) }
 
     var longEquipo by rememberSaveable {
         mutableIntStateOf(equipoPirata.size)
@@ -97,7 +98,9 @@ fun CharacterSelection(navController: NavController) {
             selectedPirataRecompensa.value,
             selectedPirataImage.value,
             0,
-            0
+            0,
+            "",
+            selectedPirataImageGrande.value
         )
 
 

@@ -6,9 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aguerecoders.actividadevaluativados.menus.BattleMenu
 import com.aguerecoders.actividadevaluativados.menus.CharacterSelection
+import com.aguerecoders.actividadevaluativados.menus.PirateInfo
 import com.aguerecoders.actividadevaluativados.menus.Login
 import com.aguerecoders.actividadevaluativados.menus.UserMenu
-import com.aguerecoders.actividadevaluativados.menus.equipoPirata
 import com.aguerecoders.actividadevaluativados.models.Pirata
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -53,6 +53,11 @@ fun GrafoNavegacion() {
 
         composable(Rutas.BattleMenu.ruta) {
             BattleMenu(navController = navController)
+        }
+
+        composable(Rutas.PirateInfo.ruta + "/{nombrePirata}") { backStackEntry ->
+            val nombrePirata = backStackEntry.arguments?.getString("nombrePirata")
+            PirateInfo(nombrePirata)
         }
     }
 }
